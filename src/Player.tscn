@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/Player/skin.material" type="Material" id=1]
+[ext_resource path="res://src/Player.gd" type="Script" id=2]
+[ext_resource path="res://src/SpringArm.gd" type="Script" id=3]
 
 [sub_resource type="CapsuleShape" id=3]
 
@@ -198,6 +200,8 @@ bind/57/bone = -1
 bind/57/pose = Transform( -0.992789, 0.00958788, -0.119372, -0.119648, -0.0395766, 0.992024, 0.00479378, 0.99917, 0.0404368, -0.340612, -0.341564, -0.0149777 )
 
 [node name="Player" type="KinematicBody"]
+collision_layer = 2
+script = ExtResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 0.6348, 0, 0, 0, -6.64949e-08, -1.52123, 0, 0.590661, -2.58186e-08, 0, 1.65522, 0 )
@@ -503,6 +507,11 @@ bones/57/bound_children = [  ]
 mesh = SubResource( 1 )
 skin = SubResource( 2 )
 
-[node name="Camera" type="Camera" parent="."]
-transform = Transform( -1, 1.56557e-08, -1.45851e-07, -2.26267e-08, 0.965926, 0.258819, 1.44933e-07, 0.258819, -0.965926, -1, 4, -4 )
+[node name="SpringArm" type="SpringArm" parent="."]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
+spring_length = 8.0
+margin = 0.2
+script = ExtResource( 3 )
+
+[node name="Camera" type="Camera" parent="SpringArm"]
 current = true

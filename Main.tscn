@@ -6,7 +6,7 @@
 [node name="Main" type="Node"]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.336278, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.21248, 0 )
 
 [node name="blockLarge" parent="." instance=ExtResource( 2 )]
-transform = Transform( 7.04715, 0, 0, 0, 2.2, 0, 0, 0, 6.94161, 0.0388947, -1.95891, -0.0356407 )
+transform = Transform( 6.72, 0, 0, 0, 1, 0, 0, 0, 7.38, 0, 0, 0 )
