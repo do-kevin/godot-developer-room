@@ -1,12 +1,24 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://src/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/Block.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/DeathFloor.tscn" type="PackedScene" id=3]
 
 [node name="Main" type="Node"]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.21248, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.21248, 0 )
 
-[node name="blockLarge" parent="." instance=ExtResource( 2 )]
+[node name="DeathFloor" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -15, 0 )
+
+[node name="platforms" type="Node" parent="."]
+
+[node name="blockLarge" parent="platforms" instance=ExtResource( 2 )]
 transform = Transform( 6.72, 0, 0, 0, 1, 0, 0, 0, 7.38, 0, 0, 0 )
+
+[node name="blockLarge2" parent="platforms" instance=ExtResource( 2 )]
+transform = Transform( 6.72, 0, 0, 0, 1, 0, 0, 0, 7.38, 0, 3, -16 )
+
+[node name="blockLarge3" parent="platforms" instance=ExtResource( 2 )]
+transform = Transform( 6.72, 0, 0, 0, 1, 0, 0, 0, 7.38, -17, 4, -16 )
