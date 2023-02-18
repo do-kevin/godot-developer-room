@@ -21,8 +21,11 @@ onready var _model: Spatial = $FemaleCyborg
 onready var animation: AnimationPlayer = $FemaleCyborg/AnimationPlayer
 onready var animation_tree: AnimationTree = $FemaleCyborg/AnimationTree
 
+var state_machine = null
+
 func _ready():
 	animation_tree.active = true
+	state_machine = $FemaleCyborg/AnimationTree.get("parameters/playback")
 
 
 func _physics_process(delta: float) -> void:
@@ -53,10 +56,13 @@ var death_roll = RandomNumberGenerator.new();
 	
 func _process(_delta: float) -> void:
 	_spring_arm.translation = translation
+	if health <= max_health * 0.75:
+		state_machine.travel("damaged_nod")
+	if health <= max_health * 0.5:
+		state_machine.travel("damaged_nod_hard")
 	if health <= 0 and !is_dead:
-		animation_tree.active = false
-		
 		death_roll.randomize()
+		animation_tree.active = false
 		var dice_value = death_roll.randi_range(1, 2)
 
 		if dice_value % 2 == 0:
@@ -69,7 +75,7 @@ func _process(_delta: float) -> void:
 		yield(get_tree().create_timer(3), "timeout") # delay code execution by 3 seconds
 
 		get_tree().reload_current_scene() # restart game
-	
+
 
 
 func take_damage(amount: int) -> int:
