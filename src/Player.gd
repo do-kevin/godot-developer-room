@@ -1,14 +1,29 @@
 extends KinematicBody
 
+# stats
+var health := 100
+var max_health := 100
+
+# animation
+var is_dead := false
+
+
 export var speed := 7.0 # movement speed
 export var jump_strength := 20.0
 export var gravity := 50.0
+
 
 var _velocity := Vector3.ZERO
 var _snap_vector := Vector3.DOWN # ground our character
 
 onready var _spring_arm: SpringArm = $SpringArm
 onready var _model: Spatial = $FemaleCyborg
+onready var animation: AnimationPlayer = $FemaleCyborg/AnimationPlayer
+onready var animation_tree: AnimationTree = $FemaleCyborg/AnimationTree
+
+func _ready():
+	animation_tree.active = true
+
 
 func _physics_process(delta: float) -> void:
 	var move_direction := Vector3.ZERO
@@ -34,5 +49,38 @@ func _physics_process(delta: float) -> void:
 		_model.rotation.y = look_direction.angle() # turns Vector2 into radians
 	
 	
+var death_roll = RandomNumberGenerator.new();
+	
 func _process(_delta: float) -> void:
 	_spring_arm.translation = translation
+	if health <= 0 and !is_dead:
+		animation_tree.active = false
+		
+		death_roll.randomize()
+		var dice_value = death_roll.randi_range(1, 2)
+
+		if dice_value % 2 == 0:
+			animation.play("death_1")
+		else:
+			animation.play("death_2")
+
+		is_dead = true
+
+		yield(get_tree().create_timer(3), "timeout") # delay code execution by 3 seconds
+
+		get_tree().reload_current_scene() # restart game
+	
+
+
+func take_damage(amount: int) -> int:
+	health -= amount
+	if health <= 0:
+		health = 0
+	return health
+
+func _input(event):
+	if event.is_action_pressed("hurt"):
+		var new_health = take_damage(10)
+		print("[Player] - new hp after damage: ", new_health)
+		
+	
