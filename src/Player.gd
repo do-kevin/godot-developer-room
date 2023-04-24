@@ -80,6 +80,7 @@ func _process(_delta: float) -> void:
 
 func take_damage(amount: int) -> int:
 	health -= amount
+	print("[took damage]: ", health)
 	if health <= 0:
 		health = 0
 	return health

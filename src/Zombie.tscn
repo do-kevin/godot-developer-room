@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://art-workspace/3d/Zombie/work-in-progress/skin.material" type="Material" id=1]
 [ext_resource path="res://src/Enemy.gd" type="Script" id=2]
@@ -413,6 +413,20 @@ tracks/57/loop_wrap = true
 tracks/57/imported = false
 tracks/57/enabled = true
 tracks/57/keys = PoolRealArray( 0, 1, 0, 0, -1.86265e-09, 7.10543e-14, 1.45519e-11, 2.06671e-10, 1, 1, 1, 1, 1, 1, 0, 0, -1.86265e-09, 7.10543e-14, 1.45519e-11, 2.06671e-10, 1, 1, 1, 1 )
+tracks/58/type = "method"
+tracks/58/path = NodePath(".")
+tracks/58/interp = 1
+tracks/58/loop_wrap = true
+tracks/58/imported = false
+tracks/58/enabled = true
+tracks/58/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "attack"
+} ]
+}
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "zombie_characterMedium"
@@ -606,6 +620,9 @@ bind/56/pose = Transform( -0.992789, 0.00958689, -0.119372, -0.119648, -0.039576
 bind/57/name = "RightToes_end"
 bind/57/bone = -1
 bind/57/pose = Transform( -0.992789, 0.00958788, -0.119372, -0.119648, -0.0395766, 0.992024, 0.00479378, 0.99917, 0.0404368, -0.340612, -0.341564, -0.0149777 )
+
+[sub_resource type="SphereShape" id=5]
+radius = 0.9
 
 [node name="Zombie" type="KinematicBody"]
 collision_layer = 2
@@ -969,3 +986,9 @@ bones/57/bound_children = [  ]
 [node name="characterMedium" type="MeshInstance" parent="Zombie/Root/Skeleton"]
 mesh = SubResource( 1 )
 skin = SubResource( 2 )
+
+[node name="HitBox" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="HitBox"]
+transform = Transform( 1, 0, 0, 0, 1.155, 0, 0, 0, 1.1, 0, 2.7, 1 )
+shape = SubResource( 5 )

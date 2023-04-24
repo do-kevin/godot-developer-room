@@ -1,6 +1,7 @@
 extends KinematicBody
 
 onready var player: KinematicBody = get_node("/root/Main/Player")
+onready var hitbox: Area = get_node("HitBox")
 
 export var movement_speed := 1.0
 
@@ -10,6 +11,14 @@ var seen_player := false
 
 func _ready():
 	pass
+	
+
+func attack():
+	var players = hitbox.get_overlapping_bodies()
+	
+	for enemy in players:
+		if enemy.has_method("take_damage"):
+			enemy.take_damage(10)
 
 
 func _physics_process(_delta: float):
