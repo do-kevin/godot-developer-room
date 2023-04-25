@@ -3,7 +3,7 @@ extends KinematicBody
 onready var player: KinematicBody = get_node("/root/Main/Player")
 onready var hitbox: Area = get_node("HitBox")
 
-export var movement_speed := 1.0
+export var movement_speed := 3.0
 
 var attack_distance := 1.5
 var velocity := Vector3()
@@ -40,4 +40,7 @@ func _physics_process(_delta: float):
 	
 	if seen_player:
 		$Pivot.look_at(player.global_transform.origin, Vector3.UP)
-		$Zombie.look_at(Vector3(-player.global_transform.origin.x, -player.get_floor_angle(), -player.global_transform.origin.z), Vector3.UP)
+		var player_direction := player.global_transform.origin
+		player_direction.y = global_transform.origin.y
+		self.look_at(player_direction, Vector3.UP)
+		self.rotate_object_local(Vector3.UP, PI)
