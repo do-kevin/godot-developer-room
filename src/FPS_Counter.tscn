@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://FPS_Counter.gd" type="Script" id=1]
+
+[node name="FPS_Counter" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -984.0
+margin_bottom = -584.0
+script = ExtResource( 1 )
+
+[node name="Counter_Container" type="ColorRect" parent="."]
+margin_left = 1.0
+margin_top = 583.0
+margin_right = 41.0
+margin_bottom = 599.0
+color = Color( 0.145098, 0.145098, 0.145098, 1 )
+
+[node name="Counter" type="Label" parent="Counter_Container"]
+modulate = Color( 0, 1, 0.0156863, 1 )
+self_modulate = Color( 0.0784314, 1, 0.0235294, 1 )
+anchor_right = 25.582
+anchor_bottom = 37.229
+margin_top = 1.0
+margin_right = -983.28
+margin_bottom = -580.664
+text = "0"
+align = 1
+valign = 1
