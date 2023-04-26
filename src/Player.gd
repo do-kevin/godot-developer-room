@@ -1,5 +1,10 @@
 extends KinematicBody
 
+var timer = null
+
+var hurt_bad := false
+var hurt_badly := false
+
 # stats
 var health := 100
 var max_health := 100
@@ -23,10 +28,29 @@ onready var animation_tree: AnimationTree = $FemaleCyborg/AnimationTree
 
 var state_machine = null
 
+func beat_heart() -> void:
+	print("START")
+	Input.start_joy_vibration(0, 0.0, 0.05, 0.0)
+	
+func beat_heart_2() -> void:
+	Input.start_joy_vibration(0, 0.0, 0.10, 0.0)
+
 func _ready():
 	animation_tree.active = true
 	state_machine = $FemaleCyborg/AnimationTree.get("parameters/playback")
-
+	if hurt_bad:
+		timer = Timer.new()
+		timer.connect("timeout", self, "beat_heart")
+		add_child(timer)
+		timer.start()
+	if hurt_badly:
+		timer.stop()
+		remove_child(timer)
+		timer = Timer.new()
+		timer.connect("timeout", self, "beat_heart_2")
+		add_child(timer)
+		timer.start()
+		
 
 func _physics_process(delta: float) -> void:
 	var move_direction := Vector3.ZERO
@@ -58,8 +82,11 @@ func _process(_delta: float) -> void:
 	_spring_arm.translation = translation
 	if health <= max_health * 0.75:
 		state_machine.travel("damaged_nod")
+		hurt_bad = true
 	if health <= max_health * 0.5:
 		state_machine.travel("damaged_nod_hard")
+		hurt_bad = false
+		hurt_badly = true
 	if health <= 0 and !is_dead:
 		death_roll.randomize()
 		animation_tree.active = false
@@ -83,6 +110,12 @@ func take_damage(amount: int) -> int:
 	print("[took damage]: ", health)
 	if health <= 0:
 		health = 0
+		
+	if (health < 0):
+		Input.stop_joy_vibration(0)
+	else:
+		Input.start_joy_vibration(0, 0.17, 0.0, 0.15)
+
 	return health
 
 func _input(event):
